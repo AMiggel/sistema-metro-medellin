@@ -56,7 +56,6 @@ public class Usuario implements Serializable {
 	@OneToOne(fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
 	private Civica civica;
 	
-		
 	
 	public long getId() {
 		return id;
