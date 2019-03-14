@@ -33,6 +33,7 @@ metodo get
 localhost:3000/usuario/
 
 <h3>para viajar y generar el trayecto se debe espicificar el id de la civica en este caso 1</h3>
+
 metodo post
 localhost:3000/usuario/viajar/1
 
@@ -70,5 +71,5 @@ Se espicifica el valor a recargar en este caso 1000, el valor no puede ser menor
 }
  
 
-Para la base de datos en aplication.properties primero ejecutar el proyecto con spring.jpa.hibernate.ddl-auto=create
-luego cambiar spring.jpa.hibernate.ddl-auto=update
+Para la base de datos en aplication.properties primero ejecutar el proyecto con <h5>spring.jpa.hibernate.ddl-auto=create</h5>
+luego cambiar a <h5>spring.jpa.hibernate.ddl-auto=update</h5>
