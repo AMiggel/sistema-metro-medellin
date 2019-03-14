@@ -13,6 +13,7 @@ localhost:3000/usuario/crear
     "apellido": "Last Name",
     "identificacion": "1011111111",
     "tipoIdentificacion": "Cedula",
+    "tipoPoblacion": "poblacion"
     "mail": "amarin@unac.edu.co",
     "edad": "22"
 }
@@ -66,6 +67,7 @@ Se espicifica el valor a recargar en este caso 1000, el valor no puede ser menor
     "apellido": "Last Name",
     "identificacion": "1011111111",
     "tipoIdentificacion": "Cedula",
+    "tipoPoblacion": "poblacion",
     "mail": "amarin@unac.edu.co",
     "edad": "22"
 }
