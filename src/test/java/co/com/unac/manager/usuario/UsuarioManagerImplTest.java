@@ -7,37 +7,60 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import co.com.unac.builder.entity.civica.CivicaBuilderTest;
+import co.com.unac.builder.entity.usuario.UsuarioBuilderTest;
 import co.com.unac.manager.usuario.constantes.ExceptionMessage;
 import co.com.unac.manager.usuario.precoditionexception.PreconditionException;
-import co.com.unac.model.Civica;
-
+import co.com.unac.model.Usuario;
 public class UsuarioManagerImplTest {
 	
 	private UsuarioManagerImpl usuarioManager;
 	private UsuarioManagerImpl usuarioManagerImpl;
 	
+	Usuario usuario; 
 	
 	
 	@Before
 	public void setUp() {
-		//usuarioManagerImpl = Mockito.mock(UsuarioManagerImpl.class);
-		usuarioManagerImpl= new UsuarioManagerImpl();
+		usuarioManagerImpl = Mockito.mock(UsuarioManagerImpl.class);
+		usuario = new UsuarioBuilderTest().buildUsuario();
+		//usuarioManagerImpl= new UsuarioManagerImpl();
 		
 	}
 	
-	/*@Test
-	public void recargarCivicaTest() throws PreconditionException {
-		double recarga= 1000;
-		long id =1;
-	try {
+	@Test
+	public void buscarUsuarioNoExistente() throws PreconditionException {
 		
-	usuarioManagerImpl.recargarCivica(id,recarga);
-	}catch(PreconditionException e) {
+		//arrange
+		when(usuarioManagerImpl.findById(null)).thenThrow(new PreconditionException (ExceptionMessage.NO_EXISTE_USUARIO));
 		
-	assertEquals(ExceptionMessage.VALOR_RECARGA_INVALIDO,e.getMessage());
+		try {
+		//act
+		usuarioManagerImpl.findById(null);
+		
+		} catch (PreconditionException e){
+		
+		//Assert	
+		assertEquals(ExceptionMessage.NO_EXISTE_USUARIO, e.getMessage());
+		}
 	}
-	}*/
+	
+	@Test
+	public void buscarUsuarioExistente() throws PreconditionException {
+		
+		//arrange
+		long id = 1;
+				
+		when(usuarioManagerImpl.findById(usuario.getId())).thenReturn(usuario);
+		
+		
+		//act
+		Usuario encontrado = usuarioManagerImpl.findById(id);
+		
+	
+		//Assert	
+		assertEquals(usuario, encontrado);
+	
+	}
 	
 
 }

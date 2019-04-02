@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import co.com.unac.manager.usuario.IUsuarioManager;
+import co.com.unac.manager.usuario.precoditionexception.PreconditionException;
 import co.com.unac.model.Civica;
 import co.com.unac.model.Trayecto;
 import co.com.unac.model.Usuario;
 
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "/usuario")
 public class UsuarioController {
@@ -41,7 +42,7 @@ public class UsuarioController {
 	}
 	
 	@GetMapping(value="/{id}")
-	public Usuario findOne(@PathVariable(value="id") Long id) {
+	public Usuario findOne(@PathVariable(value="id") Long id) throws PreconditionException {
 		return usuarioManager.findById(id);		
 	}
 	
@@ -51,7 +52,7 @@ public class UsuarioController {
 	}
 	
 	@PutMapping(value ="/{id}")
-	public Usuario modificarUsuario (@PathVariable(value="id")Long id,@RequestBody Usuario usuario) {
+	public Usuario modificarUsuario (@PathVariable(value="id")Long id,@RequestBody Usuario usuario) throws PreconditionException {
 			return usuarioManager.modificar(id, usuario);
 	}
 	

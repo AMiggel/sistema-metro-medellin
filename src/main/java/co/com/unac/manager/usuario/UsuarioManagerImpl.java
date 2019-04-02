@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import co.com.unac.manager.usuario.constantes.ExceptionMessage;
+import co.com.unac.manager.usuario.constantes.Condicion;
 import co.com.unac.manager.usuario.precoditionexception.PreconditionException;
 import co.com.unac.model.Civica;
 import co.com.unac.model.Trayecto;
@@ -38,24 +39,27 @@ public class UsuarioManagerImpl implements IUsuarioManager {
 	}
 	@Override
 	@Transactional
-	public Usuario crear(Usuario usuario) throws Exception {
+	public Usuario crear(Usuario usuario) throws PreconditionException {
 		
 		Civica civica = new Civica();
-		civica.setSaldo(1000.00);
+		civica.setSaldo(Condicion.VALOR_MINIMO);
 		civica.setUsuario(usuario);
 				
 		if(usuario.getCivica()== null) {
 			civicaRepository.save(civica);
 			usuario.setCivica(civica);
 		} else {
-			throw new Exception("El usuario ya tiene una civica asignada");
+			throw new PreconditionException(ExceptionMessage.YA_TIENE_CIVICA_ASIGNADA);
 		}
 		return usuarioRepository.save(usuario);
 	}
 
 	@Override
 	@Transactional (readOnly = true)
-	public Usuario findById(Long id) {
+	public Usuario findById(Long id) throws PreconditionException {
+		if(id == null) {
+			throw new PreconditionException(ExceptionMessage.NO_EXISTE_USUARIO);
+		}
 		return usuarioRepository.findById(id).orElse(null);
 	}
 
@@ -67,7 +71,7 @@ public class UsuarioManagerImpl implements IUsuarioManager {
 	
 	@Override
 	@Transactional
-	public Usuario modificar(Long id,Usuario usuarioDetails) {
+	public Usuario modificar(Long id,Usuario usuarioDetails) throws PreconditionException {
 		
 		Usuario usuario = findById(id);
 				
@@ -88,7 +92,7 @@ public class UsuarioManagerImpl implements IUsuarioManager {
 
 		double saldoCivica = civica.getSaldo();
 		
-		if ( valorRecarga.getSaldo() < 1000) {
+		if ( valorRecarga.getSaldo() < Condicion.VALOR_MINIMO) {
 			throw new PreconditionException(ExceptionMessage.VALOR_RECARGA_INVALIDO);			
 		} else {
 			saldoCivica+= valorRecarga.getSaldo();
@@ -120,12 +124,12 @@ public class UsuarioManagerImpl implements IUsuarioManager {
 	
 	public double calcularValorViajePorTransporte(String tipoTransporte) {
 
-		double valorViaje = 1000;
+		double valorViaje = Condicion.VALOR_MINIMO;
 		
-		if (tipoTransporte.equals("Integrado") ) {
-			valorViaje += 500;
-		} else if (tipoTransporte.equals("Metro Plus")) {
-			valorViaje += 1000;
+		if (tipoTransporte.equals(Condicion.INTEGRADO) ) {
+			valorViaje += Condicion.VALOR_INTEGRADO;
+		} else if (tipoTransporte.equals(Condicion.METROPLUS)) {
+			valorViaje += Condicion.VALOR_METROPLUS;
 		}
 		return valorViaje;
 		
