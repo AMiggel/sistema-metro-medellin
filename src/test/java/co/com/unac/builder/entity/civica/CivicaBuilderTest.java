@@ -10,11 +10,27 @@ public class CivicaBuilderTest {
 	private static final double SALDO=1000;
 	private static final Usuario USUARIO= new UsuarioBuilderTest().buildUsuario();
 	
+	private double saldo;
+	private long id;
+	private Usuario usuario;
+	
+	public CivicaBuilderTest() {
+		this.saldo=SALDO;
+		this.id= ID_CIVICA;
+		this.usuario= USUARIO;
+	}
+	
 	public Civica buildCivica() {
-		Civica civica = new Civica();
-		civica.setId(ID_CIVICA);
-		civica.setSaldo(SALDO);
-		civica.setUsuario(USUARIO);
-		return civica;
+	Civica civica = new Civica();
+	civica.setId(this.id);
+	civica.setSaldo(this.saldo);
+	civica.setUsuario(this.usuario);
+	
+	return civica;
+	}
+	
+	public CivicaBuilderTest setSaldo (double saldo) {
+		 this.saldo= saldo;
+		 return this;
 	}
 }

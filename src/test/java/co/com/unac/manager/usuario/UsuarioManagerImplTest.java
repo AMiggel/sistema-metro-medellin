@@ -7,23 +7,25 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import co.com.unac.builder.entity.civica.CivicaBuilderTest;
 import co.com.unac.builder.entity.usuario.UsuarioBuilderTest;
 import co.com.unac.manager.usuario.constantes.ExceptionMessage;
 import co.com.unac.manager.usuario.precoditionexception.PreconditionException;
+import co.com.unac.model.Civica;
 import co.com.unac.model.Usuario;
 public class UsuarioManagerImplTest {
 	
 	private UsuarioManagerImpl usuarioManager;
 	private UsuarioManagerImpl usuarioManagerImpl;
 	
-	Usuario usuario; 
+	Usuario usuario = new UsuarioBuilderTest().buildUsuario(); 
 	
 	
 	@Before
 	public void setUp() {
 		usuarioManagerImpl = Mockito.mock(UsuarioManagerImpl.class);
-		usuario = new UsuarioBuilderTest().buildUsuario();
-		//usuarioManagerImpl= new UsuarioManagerImpl();
+		
+		usuarioManager= new UsuarioManagerImpl();
 		
 	}
 	
@@ -61,6 +63,33 @@ public class UsuarioManagerImplTest {
 		assertEquals(usuario, encontrado);
 	
 	}
+
+	@Test
+	public void calcularValorViajePorTransporteIntegrado(){
+		//arrange 
+		String tipoTransporte = "INTEGRADO";
+				 	
+		//act
+		double cobro= usuarioManager.calcularValorViajePorTransporte(tipoTransporte);
+		
+		//Assert	
+		assertEquals(1500.00, cobro,0);
+		
+	}
+	
+	@Test
+	public void calcularValorViajePorTransporteMetroPlus(){
+		//arrange 
+		String tipoTransporte = "METROPLUS";
+				 	
+		//act
+		double cobro= usuarioManager.calcularValorViajePorTransporte(tipoTransporte);
+		
+		//Assert	
+		assertEquals(2000.00, cobro,0);
+		
+	}
+	
 	
 
 }

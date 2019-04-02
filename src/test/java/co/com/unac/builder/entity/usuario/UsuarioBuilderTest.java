@@ -15,6 +15,7 @@ public class UsuarioBuilderTest {
 	private static final String TIPO_POBLACION= "ESTUDIANTE";
 	private static final Civica CIVICA= new CivicaBuilderTest().buildCivica();
 	
+	
 	public Usuario buildUsuario(){
 		Usuario usuario = new Usuario();
 		usuario.setId(ID_USUARIO);
